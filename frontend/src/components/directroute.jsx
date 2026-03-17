@@ -1,26 +1,28 @@
-
 function DirectRouteCard({ route }) {
   return (
     <div style={styles.card}>
-      <div style={styles.badge}>Direct</div>
-      <div style={styles.trainName}>
-        {route.train.trainName}
-        <span style={styles.trainNumber}> #{route.train.trainNumber}</span>
+      <div style={styles.topRow}>
+        <div style={styles.tag}>DIRECT</div>
+        <div style={styles.trainNum}>{route.train.trainNumber}</div>
       </div>
-      <div style={styles.row}>
-        <div style={styles.timeBlock}>
+
+      <div style={styles.name}>{route.train.trainName}</div>
+
+      <div style={styles.journey}>
+        <div>
           <div style={styles.time}>{route.departure}</div>
           <div style={styles.station}>{route.from}</div>
         </div>
-        <div style={styles.arrow}>──────►</div>
-        <div style={styles.timeBlock}>
+        <div style={styles.line} />
+        <div style={{ textAlign: 'right' }}>
           <div style={styles.time}>{route.arrival}</div>
           <div style={styles.station}>{route.to}</div>
         </div>
       </div>
+
       <div style={styles.footer}>
-        <span>📏 {route.distance} km</span>
-        <span style={styles.price}>₹ {route.price}</span>
+        <div style={styles.meta}>{route.distance} KM</div>
+        <div style={styles.price}>Rs {route.price}</div>
       </div>
     </div>
   );
@@ -28,68 +30,80 @@ function DirectRouteCard({ route }) {
 
 const styles = {
   card: {
-    background: 'white',
-    borderRadius: '12px',
-    padding: '1.5rem',
-    marginBottom: '1rem',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    borderLeft: '4px solid #0f3460'
+    background: '#fff',
+    padding: '2rem 2.5rem',
+    marginBottom: '2px',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif"
   },
-  badge: {
-    display: 'inline-block',
-    background: '#0f3460',
-    color: 'white',
-    padding: '2px 10px',
-    borderRadius: '20px',
-    fontSize: '0.75rem',
-    marginBottom: '0.5rem'
+  topRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '0.35rem'
   },
-  trainName: {
-    fontSize: '1.1rem',
-    fontWeight: 'bold',
-    marginBottom: '1rem',
-    color: '#1a1a2e'
+  tag: {
+    fontSize: '0.6rem',
+    letterSpacing: '0.2em',
+    fontWeight: '700',
+    color: '#000',
+    background: '#000',
+    color: '#fff',
+    padding: '3px 10px'
   },
-  trainNumber: {
-    fontWeight: 'normal',
-    color: '#888',
-    fontSize: '0.9rem'
+  trainNum: {
+    fontSize: '0.65rem',
+    color: '#bbb',
+    letterSpacing: '0.1em'
   },
-  row: {
+  name: {
+    fontSize: '1rem',
+    fontWeight: '700',
+    color: '#000',
+    marginBottom: '2rem',
+    letterSpacing: '-0.02em'
+  },
+  journey: {
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '1rem'
-  },
-  timeBlock: {
-    textAlign: 'center'
+    justifyContent: 'space-between',
+    gap: '1.5rem',
+    marginBottom: '2rem'
   },
   time: {
-    fontSize: '1.4rem',
-    fontWeight: 'bold',
-    color: '#1a1a2e'
+    fontSize: '2.5rem',
+    fontWeight: '900',
+    color: '#000',
+    letterSpacing: '-2px',
+    lineHeight: 1
   },
   station: {
-    fontSize: '0.85rem',
-    color: '#666'
+    fontSize: '0.7rem',
+    color: '#999',
+    marginTop: '0.3rem',
+    letterSpacing: '0.1em'
   },
-  arrow: {
+  line: {
     flex: 1,
-    textAlign: 'center',
-    color: '#aaa',
-    fontSize: '1rem'
+    height: '1px',
+    background: '#e8e8e8'
   },
   footer: {
     display: 'flex',
     justifyContent: 'space-between',
-    borderTop: '1px solid #eee',
-    paddingTop: '0.75rem',
-    color: '#555'
+    alignItems: 'center',
+    borderTop: '1px solid #f0f0f0',
+    paddingTop: '1.25rem'
+  },
+  meta: {
+    fontSize: '0.65rem',
+    color: '#bbb',
+    letterSpacing: '0.15em'
   },
   price: {
-    color: '#e94560',
-    fontWeight: 'bold',
-    fontSize: '1.1rem'
+    fontSize: '1.5rem',
+    fontWeight: '900',
+    color: '#000',
+    letterSpacing: '-1px'
   }
 };
 

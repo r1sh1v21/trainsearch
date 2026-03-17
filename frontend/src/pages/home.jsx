@@ -23,7 +23,7 @@ function Home() {
       const data = await searchTrains(from, to);
       setResults(data);
     } catch (err) {
-      setError('Something went wrong. Is the backend running?');
+      setError('Could not reach the server.');
     } finally {
       setLoading(false);
     }
@@ -51,35 +51,29 @@ function Home() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.container}>
-        <SearchBar
-          stations={stations}
-          onSearch={handleSearch}
-          loading={loading}
-        />
+      <SearchBar stations={stations} onSearch={handleSearch} loading={loading} />
 
-        {error && <p style={styles.error}>{error}</p>}
+      <div style={styles.body}>
+        {error && <div style={styles.error}>{error}</div>}
 
         {results && (
           <div>
-            <div style={styles.resultsHeader}>
-              <span style={styles.resultsCount}>
-                {results.totalResults} routes found for {results.from} → {results.to}
-              </span>
+            <div style={styles.bar}>
+              <div style={styles.count}>
+                {results.totalResults} RESULTS &nbsp;·&nbsp; {results.from.toUpperCase()} TO {results.to.toUpperCase()}
+              </div>
               <select
-                style={styles.sortSelect}
+                style={styles.sort}
                 value={sortBy}
                 onChange={e => setSortBy(e.target.value)}
               >
-                <option value="price">Sort by Price</option>
-                <option value="departure">Sort by Departure</option>
+                <option value="price">PRICE</option>
+                <option value="departure">DEPARTURE</option>
               </select>
             </div>
 
             {getSortedRoutes().length === 0 ? (
-              <div style={styles.noResults}>
-                No trains available for this route
-              </div>
+              <div style={styles.empty}>No trains available for this route.</div>
             ) : (
               getSortedRoutes().map((route, i) =>
                 route.type === 'direct'
@@ -97,41 +91,48 @@ function Home() {
 const styles = {
   page: {
     minHeight: '100vh',
-    background: '#f0f2f5',
-    padding: '2rem 1rem'
+    background: '#f5f5f5',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif"
   },
-  container: {
-    maxWidth: '800px',
-    margin: '0 auto'
+  body: {
+    maxWidth: '900px',
+    margin: '0 auto',
+    padding: '0 4rem 6rem'
   },
   error: {
-    color: '#e94560',
-    textAlign: 'center'
+    fontSize: '0.75rem',
+    color: '#000',
+    padding: '1rem 0',
+    letterSpacing: '0.05em'
   },
-  resultsHeader: {
+  bar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '1rem'
+    padding: '1.5rem 0',
+    borderBottom: '1px solid #ddd',
+    marginBottom: '2px'
   },
-  resultsCount: {
-    fontWeight: 'bold',
-    color: '#1a1a2e'
+  count: {
+    fontSize: '0.65rem',
+    color: '#aaa',
+    letterSpacing: '0.15em'
   },
-  sortSelect: {
-    padding: '0.5rem 1rem',
-    borderRadius: '8px',
-    border: '1px solid #ddd',
-    fontSize: '0.9rem',
-    cursor: 'pointer'
+  sort: {
+    background: 'transparent',
+    border: 'none',
+    fontSize: '0.65rem',
+    letterSpacing: '0.15em',
+    color: '#aaa',
+    cursor: 'pointer',
+    outline: 'none',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif"
   },
-  noResults: {
-    textAlign: 'center',
-    padding: '3rem',
-    background: 'white',
-    borderRadius: '12px',
-    color: '#888',
-    fontSize: '1.1rem'
+  empty: {
+    padding: '5rem 0',
+    fontSize: '0.8rem',
+    color: '#bbb',
+    letterSpacing: '0.1em'
   }
 };
 
